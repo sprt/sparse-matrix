@@ -30,15 +30,14 @@ void matrix_free(struct matrix *m) {
 }
 
 int matrix_set(struct matrix *m, unsigned int i, unsigned int j, int val) {
-	if (val == 0) {
-		return 0;
-	}
-
 	struct line **curline = &m->lines;
 	while (*curline && (*curline)->i < i) {
 		curline = &(*curline)->next;
 	}
 	if (!*curline || (*curline)->i > i) { /* line i does not exist */
+		if (val == 0) {
+			return 0;
+		}
 		struct line *oldline = *curline;
 		*curline = malloc(sizeof (struct line));
 		if (!*curline) {
@@ -50,19 +49,30 @@ int matrix_set(struct matrix *m, unsigned int i, unsigned int j, int val) {
 	}
 
 	struct elem **curelem = &(*curline)->elems;
+	struct elem *firstelem = *curelem;
 	while (*curelem && (*curelem)->j < j) {
 		curelem = &(*curelem)->next;
 	}
 	if (!*curelem || (*curelem)->j > j) { /* element i,j does not exist */
+		if (val == 0) {
+			return 0;
+		}
 		struct elem *oldelem = *curelem;
 		*curelem = malloc(sizeof (struct elem));
 		if (!*curelem) {
 			return -1;
 		}
 		(*curelem)->next = oldelem;
+		(*curelem)->j = j;
+		(*curelem)->value = val;
 	}
-	(*curelem)->j = j;
-	(*curelem)->value = val;
+
+	if (val == 0 && firstelem == *curelem) {
+		free(firstelem);
+		struct line *oldline = *curline;
+		*curline = (*curline)->next;
+		free(oldline);
+	}
 
 	return 0;
 }

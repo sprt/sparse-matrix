@@ -26,6 +26,12 @@ void test_matrix_set(void) {
 	CU_ASSERT_EQUAL(matrix_set(m, 1, 0, 4), 0);
 	CU_ASSERT_EQUAL(matrix_set(m, 1, 2, 6), 0);
 	CU_ASSERT_EQUAL(matrix_set(m, 1, 1, 5), 0);
+	CU_ASSERT_EQUAL(matrix_set(m, 2, 2, 1), 0);
+	CU_ASSERT_EQUAL(matrix_set(m, 2, 2, 0), 0);
+	CU_ASSERT_EQUAL(matrix_set(m, 3, 1, 1), 0);
+	CU_ASSERT_EQUAL(matrix_set(m, 3, 0, 0), 0);
+	CU_ASSERT_EQUAL(matrix_set(m, 3, 1, 0), 0);
+	CU_ASSERT_EQUAL(matrix_set(m, 4, 0, 0), 0);
 
 	struct line *line0 = m->lines;
 	CU_ASSERT_PTR_NOT_NULL_FATAL(line0);
