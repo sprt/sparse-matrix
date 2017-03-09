@@ -118,12 +118,12 @@ struct matrix *matrix_add(const struct matrix *m1, const struct matrix *m2) {
 }
 
 struct matrix *matrix_transpose(const struct matrix *m) {
-	struct matrix *t = matrix_init(m->nlines, m->ncols);
+	struct matrix *t = matrix_init(m->ncols, m->nlines);
 	if (!t) {
 		return NULL;
 	}
-	for (unsigned int i = 0; i < t->nlines; i++) {
-		for (unsigned int j = 0; j < t->ncols; j++) {
+	for (unsigned int i = 0; i < m->nlines; i++) {
+		for (unsigned int j = 0; j < m->ncols; j++) {
 			int val = matrix_get(m, i, j);
 			if (matrix_set(t, j, i, val) != 0) {
 				matrix_free(t);

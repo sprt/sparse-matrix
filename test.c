@@ -164,6 +164,8 @@ void test_matrix_transpose(void) {
 
 	struct matrix *m2 = matrix_transpose(m1);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(m2);
+	CU_ASSERT_EQUAL(m2->nlines, 3);
+	CU_ASSERT_EQUAL(m2->ncols, 2);
 	CU_ASSERT_EQUAL(matrix_get(m2, 0, 0), 1);
 	CU_ASSERT_EQUAL(matrix_get(m2, 0, 1), 4);
 	CU_ASSERT_EQUAL(matrix_get(m2, 1, 0), 2);
